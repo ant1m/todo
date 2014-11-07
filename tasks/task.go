@@ -19,7 +19,10 @@ type TaskManager struct {
 }
 
 func NewTaskManager() *TaskManager {
-	return &TaskManager{currentId: 1}
+	return &TaskManager{
+		tasks:     make([]*Task, 0),
+		currentId: 1,
+	}
 }
 
 func (tm *TaskManager) Save(task *Task) {
