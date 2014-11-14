@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/ant1m/todo/tasks"
+	"github.com/gorilla/mux"
 )
 
 type AppContext struct {
@@ -13,7 +14,9 @@ type AppContext struct {
 
 func RunServer() {
 	context := &AppContext{tasks.NewTaskManager()}
-	http.HandleFunc("/tasks", tasksHandler(context))
+	r := mux.NewRouter()
+	r.HandleFunc("/tasks", tasksHandler(context))
+	http.Handle("/tasks", r)
 	go http.ListenAndServe(":8080", nil)
 	println("started")
 }
